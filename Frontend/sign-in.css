@@ -1,0 +1,63 @@
+ .u-section-1 {
+  background-image: url("images/pexels-cottonbro-studio-4270216.jpg");
+  background-position: 50% 50%;
+}
+
+.u-section-1 .u-sheet-1 {
+  min-height: 772px;
+}
+
+.u-section-1 .u-form-1 {
+  height: 429px;
+  background-image: none;
+  width: 463px;
+  --checkbox-checked-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%232cccc4' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+  margin: 200px auto 60px;
+}
+
+.u-section-1 .u-input-1 {
+  height: 47px;
+}
+
+.u-section-1 .u-input-2 {
+  height: 47px;
+}
+
+.u-section-1 .u-btn-1 {
+  background-image: none;
+  padding: 10px 22px 10px 21px;
+}
+
+.u-section-1 .u-text-1 {
+  margin-left: 0;
+  background-image: none;
+  font-weight: 700;
+}
+
+.u-section-1 .u-btn-2 {
+  background-image: none;
+  font-size: 1.125rem;
+  padding: 0;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 637px;
+  }
+}
+
+@media (max-width: 991px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 596px;
+  }
+
+  .u-section-1 .u-form-1 {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-1 .u-form-1 {
+    width: 340px;
+  }
+}
