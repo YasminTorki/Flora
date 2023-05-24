@@ -50,13 +50,9 @@ module.exports = new (class AdminController extends Controller {
     }
   }
 
-  async addFlower(req,res,next){
+  async addFlower(req, res, next) {
     try {
       
-      
-
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 })();

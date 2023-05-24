@@ -3,7 +3,7 @@ const router = require("express").Router();
 
 router.get("/", adminController.indexPage);
 router.post("/login", adminController.loginPage);
-router.post("/addflower", adminController.loginPage);
+router.post("/addflower", adminController.addFlower);
 module.exports = {
     AdminRoutes : router
 }
