@@ -6,7 +6,7 @@ const Schema = new mongoose.Schema({
     password : {type : String, required : true},
     bills : {type : [], default : []},
     discount : {type : Number, default : 0},
-    Role : {type : String, default : "USER"},
+    Role : {type : String, default : "USER"},    
 });
 
 module.exports = {
