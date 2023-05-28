@@ -109,4 +109,26 @@ module.exports = new (class AdminController extends Controller {
       next(error);
     }
   }
+  
+  async deleteFlower(req, res, next) {
+    try {
+      const name = req.body.name;
+      const flw = await ProductModel.deleteOne({ name });
+
+      if (!flw.deletedCount) {
+        return res.status(200).json({
+          success: false,
+          message: 'عملیات حذف با موفقیت انجام نشد',
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'عملیات حذف موفقیت آمیز بود',
+      });
+    } catch (error) {
+      next(error);
+    }
+
+  }
 })();
