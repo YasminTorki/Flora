@@ -53,9 +53,11 @@ module.exports = new (class AdminController extends Controller {
     }
   }
 
-  async addpreparedFlower(req, res, next) { //برای اضافه کردن گل های اماده هست
+  async addpreparedFlower(req, res, next) {
+    //برای اضافه کردن گل های اماده هست
     try {
-      const name = req.body.name;
+      const data = JSON.parse(req.body.properties);
+      const name = data.name;
       let flower = await ProductModel.findOne({ name });
 
       if (flower) {
@@ -75,6 +77,15 @@ module.exports = new (class AdminController extends Controller {
           cb(null, filename);
         },
       });
+
+      const newFlower = {
+        name: data.name,
+        price: data.price,
+        discount: data.discount,
+        type: data.type,
+        desc: data.desc,
+        image: req.file.originalname,
+      };
       const upload = multer({ storage: storage }).single("file");
 
       upload(req, res, async (err) => {
@@ -82,22 +93,20 @@ module.exports = new (class AdminController extends Controller {
           console.error(err);
           return res.status(500).json({
             success: false,
-            message: 'upload failed',
+            message: "upload failed",
           });
         }
-
+        await ProductModel.create(newFlower);
         return res.status(200).json({
           success: true,
-          message: 'upload success',
+          message: "upload success",
         });
-
       });
-
     } catch (error) {
       next(error);
     }
   }
-  
+
   async deleteFlower(req, res, next) {
     try {
       const name = req.body.name;
@@ -106,17 +115,16 @@ module.exports = new (class AdminController extends Controller {
       if (!flw.deletedCount) {
         return res.status(200).json({
           success: false,
-          message: 'عملیات حذف با موفقیت انجام نشد',
+          message: "عملیات حذف با موفقیت انجام نشد",
         });
       }
 
       return res.status(200).json({
         success: true,
-        message: 'عملیات حذف موفقیت آمیز بود',
+        message: "عملیات حذف موفقیت آمیز بود",
       });
     } catch (error) {
       next(error);
     }
-
   }
 })();
