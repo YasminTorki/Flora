@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const addFlower = Joi.object({
+const addpreparedFlower = Joi.object({
   name: Joi.string().required(),
   price: Joi.number().required(),
   discount: Joi.number().default(0),
@@ -13,5 +13,5 @@ const addFlower = Joi.object({
 });
 
 module.exports = {
-    addFlower,
+  addpreparedFlower,
   };

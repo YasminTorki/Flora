@@ -53,7 +53,7 @@ module.exports = new (class AdminController extends Controller {
     }
   }
 
-  async addFlower(req, res, next) {
+  async addpreparedFlower(req, res, next) { //برای اضافه کردن گل های اماده هست
     try {
       const name = req.body.name;
       let flower = await ProductModel.findOne({ name });
@@ -61,7 +61,7 @@ module.exports = new (class AdminController extends Controller {
       if (flower) {
         return res.status(422).json({
           success: false,
-          message: "این گل در دیتابیس ثبت شده است",
+          message: " این گل قبلا در دیتابیس ثبت شده است",
         });
       }
 
@@ -82,7 +82,7 @@ module.exports = new (class AdminController extends Controller {
           return res.sendStatus(500);
         }
         console.log(req.file);
-        flower = await ProductModel.create({
+        flower =  ProductModel.create({ //await pak kardam is it okay?
           name: req.body.name,
           price: req.body.price,
           discount: req.body.discount,
@@ -94,7 +94,7 @@ module.exports = new (class AdminController extends Controller {
         });
       });
 
-      if (!flower) {
+      if (!flower) {//gol eshtebah dare vared mishe
         return res.status(422).json({
           success: false,
           message: "خطایی رخ داده است",
