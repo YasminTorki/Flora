@@ -64,47 +64,35 @@ module.exports = new (class AdminController extends Controller {
           message: " این گل قبلا در دیتابیس ثبت شده است",
         });
       }
-
+      let filename = null;
       const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, "C:/Users/iranian/Desktop/Flora/backend/uploads");
+          cb(null, "C:/Users/Assist/Desktop/floraMay28/Flora/backend/uploads");
         },
 
         filename: function (req, file, cb) {
-          cb(null, Date.now() + "-" + file.originalname);
+          filename = Date.now() + "-" + file.originalname;
+          cb(null, filename);
         },
       });
-      const upload = multer({ storage: storage }).single("image");
+      const upload = multer({ storage: storage }).single("file");
 
       upload(req, res, async (err) => {
         if (err) {
           console.error(err);
-          return res.sendStatus(500);
+          return res.status(500).json({
+            success: false,
+            message: 'upload failed',
+          });
         }
-        console.log(req.file);
-        flower =  ProductModel.create({ //await pak kardam is it okay?
-          name: req.body.name,
-          price: req.body.price,
-          discount: req.body.discount,
-          image: req.file,
-          category: req.body.category,
-          count: req.body.count,
-          type: req.body.type,
-          desc: req.body.desc,
+
+        return res.status(200).json({
+          success: true,
+          message: 'upload success',
         });
+
       });
 
-      if (!flower) {//gol eshtebah dare vared mishe
-        return res.status(422).json({
-          success: false,
-          message: "خطایی رخ داده است",
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: "عملیات موفقیت آمیز بود",
-      });
     } catch (error) {
       next(error);
     }
