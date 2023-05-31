@@ -47,7 +47,7 @@ module.exports = new (class AdminController extends Controller {
         });
       }
 
-      // return res.status(200).send("Admin Login Page Is Loaded");
+      // return res.status(200).send("Admin Login Page Is Loaded");eaevfdz
     } catch (error) {
       next(error);
     }
@@ -84,17 +84,18 @@ module.exports = new (class AdminController extends Controller {
         console.log(req.file);
         flower = await ProductModel.create({
           name: req.body.name,
-          price: req.body.price,
-          discount: req.body.discount,
+          color: req.body.color,
           image: req.file,
-          category: req.body.category,
+          price: req.body.price,
           count: req.body.count,
+          discount: req.body.discount,
+          category: req.body.category,
           type: req.body.type,
           desc: req.body.desc,
         });
       });
 
-      if (!flower) {
+      if (flower !== null) {
         return res.status(422).json({
           success: false,
           message: "خطایی رخ داده است",

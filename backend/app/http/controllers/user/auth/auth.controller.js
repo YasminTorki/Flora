@@ -1,8 +1,8 @@
 const createError = require("http-errors");
 const { authSchema } = require("../../../validators/user/auth.schema");
 const { UserModel } = require("../../../../models/users");
+const { OrderModel } = require("../../../../models/order");
 class UserAuthController {
-
   async login(req, res, next) {
     const { email, password } = req.body;
     try {
@@ -21,7 +21,6 @@ class UserAuthController {
     } catch (error) {
       next(createError.BadRequest(error.message));
     }
-
   }
 
   async register(req, res, next) {
@@ -51,7 +50,40 @@ class UserAuthController {
       next(createError.BadRequest(error.message));
     }
   }
-  
+
+  async addBasket(req, res, next) {
+    try {
+
+      console.log(req.body);
+      const order = {
+        userid: req.body.userid,
+        name: req.body.name,
+        count: req.body.count,
+        tprice: req.body.tprice,
+        desc: req.body.desc,
+        flowerid: req.body.flowerid,
+      };
+
+
+      let flower = await OrderModel.findOne({ flowerid: req.body.flowerid });
+      if (flower) {
+        const message = {
+          isOk: false,
+          message: "you picked this flower before!!!",
+        };
+        return res.status(422).json(message);
+      }
+
+      const ord = await OrderModel.create(order);
+      return res.status(200).json({
+        isOk: true,
+        message: "goooooode",
+      });
+    } catch (error) {
+      // next(error);
+      next(createError.BadRequest(error.message));
+    }
+  }
 }
 module.exports = {
   UserAuthController: new UserAuthController(),

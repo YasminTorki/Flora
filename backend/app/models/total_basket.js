@@ -5,10 +5,8 @@ const Schema = new mongoose.Schema({
     Type : {type : Number, required : true},
     Deadline : {type : String, required : true},
     price : {type : Number, required : true},
-
-
-
 });
+
 moduel.exports = {
     categoryModel : mongoose.model("custom_basket", Schema)
 }

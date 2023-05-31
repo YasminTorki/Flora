@@ -1,14 +1,13 @@
 const { default: mongoose } = require("mongoose");
 const Schema = new mongoose.Schema({
+  userid: { type: mongoose.Types.ObjectId },
   name: { type: String, required: true, unique: true },
-  price: { type: Number, required: true },
+  tprice: { type: Number, required: true },
   discount: { type: Number, default: 0 },
-  image: { type: Buffer },
-  category: { type: mongoose.Types.ObjectId},
   count: { type: Number, required: true },
-  type: { type: [String], required: true },
   desc: { type: String, required: true },
+  flowerid: { type: mongoose.Types.ObjectId },
 });
 module.exports = {
-  ProductModel: mongoose.model("Prep_products", Schema),
+  OrderModel: mongoose.model("order", Schema),
 };
