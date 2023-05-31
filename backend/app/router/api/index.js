@@ -20,6 +20,7 @@ const router = require("express").Router();
  *              description: notfound
  */
 router.get("/", homeController.indexPage);
+router.get("/home", homeController.getHomePage)
 module.exports = {
     AllRoutes : router
 }

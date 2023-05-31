@@ -9,4 +9,18 @@ module.exports = new (class HomeController extends Controller {
       next(error);
     }
   }
+
+  async getHomePage(req, res, next) {
+    try {
+      const user = {
+        name: 'Samin',
+        family: 'Saei',
+        username: 'SSaei',
+        userId: 12,
+      };
+      return res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
 })();
