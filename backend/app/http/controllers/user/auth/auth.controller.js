@@ -3,7 +3,6 @@ const { authSchema } = require("../../../validators/user/auth.schema");
 const { UserModel } = require("../../../../models/users");
 const { OrderModel } = require("../../../../models/order");
 class UserAuthController {
-
   async login(req, res, next) {
     const { email, password } = req.body;
     try {
@@ -54,7 +53,6 @@ class UserAuthController {
 
   async addToBasket(req, res, next) {
     try {
-
       console.log(req.body);
       const order = {
         userid: req.body.userid,
@@ -64,7 +62,6 @@ class UserAuthController {
         desc: req.body.desc,
         flowerid: req.body.flowerid,
       };
-
 
       let flower = await OrderModel.findOne({ flowerid: req.body.flowerid });
       if (flower) {
@@ -106,7 +103,6 @@ class UserAuthController {
       next(error);
     }
   }
-  
 }
 
 module.exports = {

@@ -10,6 +10,7 @@ const authSchema = Joi.object({
     "any.required": "وارد کردن پسورد الزامی است",
     "string.min": "طول کلمه عبور حداقل شش کاراکتر است",
   }),
+  Role: Joi.string(),
 }).options({ abortEarly: false });
 
 module.exports = {

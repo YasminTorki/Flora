@@ -220,7 +220,7 @@ module.exports = new (class AdminController extends Controller {
 
       const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, "C:/Users/iranian/Desktop/Flora/backend/uploads");
+          cb(null, "../uploads");
         },
 
         filename: function (req, file, cb) {
@@ -237,11 +237,9 @@ module.exports = new (class AdminController extends Controller {
         console.log(req.file);
         box = await BoxModel.create({
           name: req.body.name,
-          color: req.body.color,
           price: req.body.price,
           image: req.file,
           count: req.body.count,
-          desc: req.body.desc,
         });
       });
 
