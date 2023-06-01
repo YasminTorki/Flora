@@ -58,56 +58,51 @@ module.exports = new (class AdminController extends Controller {
 
   async addPrepProduct(req, res, next) {
     try {
-      const name = req.body.name;
+      const data = JSON.parse(req.body.properties);
+      const name = data.name;
       let flower = await ProductModel.findOne({ name });
 
       if (flower) {
         return res.status(422).json({
           success: false,
-          message: "این گل در دیتابیس ثبت شده است",
+          message: " این گل قبلا در دیتابیس ثبت شده است",
         });
       }
-
+      let filename = null;
       const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, "C:/Users/iranian/Desktop/Flora/backend/uploads");
+          cb(null, "C:/Users/Assist/Desktop/floraMay28/Flora/backend/uploads");
         },
 
         filename: function (req, file, cb) {
-          cb(null, Date.now() + "-" + file.originalname);
+          filename = Date.now() + "-" + file.originalname;
+          cb(null, filename);
         },
       });
-      const upload = multer({ storage: storage }).single("image");
+
+      const newFlower = {
+        name: data.name,
+        price: data.price,
+        discount: data.discount,
+        type: data.type,
+        desc: data.desc,
+        image: req.file.originalname,
+      };
+      const upload = multer({ storage: storage }).single("file");
 
       upload(req, res, async (err) => {
         if (err) {
           console.error(err);
-          return res.sendStatus(500);
+          return res.status(500).json({
+            success: false,
+            message: "upload failed",
+          });
         }
-        console.log(req.file);
-        flower = await ProductModel.create({
-          name: req.body.name,
-          color: req.body.color,
-          image: req.file,
-          price: req.body.price,
-          count: req.body.count,
-          discount: req.body.discount,
-          category: req.body.category,
-          type: req.body.type,
-          desc: req.body.desc,
+        await ProductModel.create(newFlower);
+        return res.status(200).json({
+          success: true,
+          message: "upload success",
         });
-      });
-
-      if (flower !== null) {
-        return res.status(422).json({
-          success: false,
-          message: "خطایی رخ داده است",
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: "عملیات موفقیت آمیز بود",
       });
     } catch (error) {
       next(error);
