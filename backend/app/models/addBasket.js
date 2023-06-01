@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
     count : {type : Number, required : true},
     tprice : {type : Number, required : true}
 });
-moduel.exports = {
+module.exports = {
     BlogModel : mongoose.model("addBasket", Schema)
 }
  

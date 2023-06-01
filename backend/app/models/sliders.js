@@ -5,6 +5,6 @@ const Schema = new mongoose.Schema({
     image : {type : String, required : true},
     type : {type : String, default : "main"}
 });
-moduel.exports = {
+module.exports = {
     SliderModel : mongoose.model("slider", Schema)
 }

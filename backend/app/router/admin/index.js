@@ -5,7 +5,13 @@ const multer = require("multer");
 
 router.get("/", adminController.indexPage);
 router.post("/login", adminController.loginPage);
-router.post("/addflower", adminController.addFlower);
+router.post("/addPrepProduct", adminController.addPrepProduct);
+router.post("/deletePrepProduct", adminController.deletePrepProduct);
+router.post("/addBox", adminController.addBox);
+router.post("/deleteBox", adminController.deleteBox);
+router.post("/addCard", adminController.addCard);
+router.post("/deleteCard", adminController.deleteCard);
+
 module.exports = {
   AdminRoutes: router,
 };

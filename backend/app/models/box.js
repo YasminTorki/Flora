@@ -1,11 +1,13 @@
-const {default: mongoose} = require ("mongoose");
+const { default: mongoose } = require("mongoose");
 const Schema = new mongoose.Schema({
-    image : {type : String, required : true},
-    count : {type : Number, required : true},
-    price : {type : Number, required : true}
-
-
+  name: { type: String, required: true, unique: true },
+  color: { type: String, required: true },
+  price: { type: Number, required: true },
+  image: { type: String },
+  count: { type: Number, required: true },
+  desc: { type: String },
 });
-moduel.exports = {
-    BlogModel : mongoose.model("box", Schema)
-}
+
+module.exports = {
+  BoxModel: mongoose.model("box", Schema),
+};

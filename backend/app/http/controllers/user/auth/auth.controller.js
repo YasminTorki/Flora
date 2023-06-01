@@ -3,6 +3,7 @@ const { authSchema } = require("../../../validators/user/auth.schema");
 const { UserModel } = require("../../../../models/users");
 const { OrderModel } = require("../../../../models/order");
 class UserAuthController {
+
   async login(req, res, next) {
     const { email, password } = req.body;
     try {
@@ -84,7 +85,9 @@ class UserAuthController {
       next(createError.BadRequest(error.message));
     }
   }
+  
 }
+
 module.exports = {
   UserAuthController: new UserAuthController(),
 };

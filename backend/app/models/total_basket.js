@@ -7,6 +7,6 @@ const Schema = new mongoose.Schema({
     price : {type : Number, required : true},
 });
 
-moduel.exports = {
+module.exports = {
     categoryModel : mongoose.model("custom_basket", Schema)
 }
