@@ -80,13 +80,13 @@ module.exports = new (class AdminController extends Controller {
         },
       });
 
-      const newFlower = {
+      const newPrepProduct = {
         name: data.name,
-        price: data.price,
         discount: data.discount,
         type: data.type,
-        desc: data.desc,
+        price: data.price,
         image: req.file.originalname,
+        desc: data.desc,
       };
       const upload = multer({ storage: storage }).single("file");
 
@@ -115,7 +115,7 @@ module.exports = new (class AdminController extends Controller {
       const flw = await ProductModel.deleteOne({ name });
 
       if (!flw.deletedCount) {
-        return res.status(200).json({
+        return res.status(422).json({
           success: false,
           message: "عملیات حذف با موفقیت انجام نشد",
         });
@@ -130,7 +130,7 @@ module.exports = new (class AdminController extends Controller {
     }
   }
 
-  async addflower(req, res, next) {
+  async addFlower(req, res, next) {
     try {
       const name = req.body.name;
       let flower = await FlowerModel.findOne({ name });
@@ -188,10 +188,10 @@ module.exports = new (class AdminController extends Controller {
   async deleteFlower(req, res, next) {
     try {
       const name = req.body.name;
-      const box = await FlowerModel.deleteOne({ name });
+      const flower = await FlowerModel.deleteOne({ name });
 
-      if (!box.deletedCount) {
-        return res.status(200).json({
+      if (!flower.deletedCount) {
+        return res.status(422).json({
           success: false,
           message: "عملیات حذف با موفقیت انجام نشد",
         });
@@ -267,7 +267,7 @@ module.exports = new (class AdminController extends Controller {
       const box = await BoxModel.deleteOne({ name });
 
       if (!box.deletedCount) {
-        return res.status(200).json({
+        return res.status(422).json({
           success: false,
           message: "عملیات حذف با موفقیت انجام نشد",
         });
@@ -342,7 +342,7 @@ module.exports = new (class AdminController extends Controller {
       const crd = await CardModel.deleteOne({ name });
 
       if (!crd.deletedCount) {
-        return res.status(200).json({
+        return res.status(422).json({
           success: false,
           message: "عملیات حذف با موفقیت انجام نشد",
         });

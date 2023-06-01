@@ -11,6 +11,8 @@ router.post("/addBox", adminController.addBox);
 router.post("/deleteBox", adminController.deleteBox);
 router.post("/addCard", adminController.addCard);
 router.post("/deleteCard", adminController.deleteCard);
+router.post("/addFlower", adminController.addFlower);
+router.post("/deleteFlower", adminController.deleteFlower);
 
 module.exports = {
   AdminRoutes: router,

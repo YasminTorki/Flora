@@ -52,7 +52,7 @@ class UserAuthController {
     }
   }
 
-  async addBasket(req, res, next) {
+  async addToBasket(req, res, next) {
     try {
 
       console.log(req.body);
@@ -70,7 +70,7 @@ class UserAuthController {
       if (flower) {
         const message = {
           isOk: false,
-          message: "you picked this flower before!!!",
+          message: "این محصول در سبد خرید شما قرار دارد.",
         };
         return res.status(422).json(message);
       }
@@ -78,11 +78,32 @@ class UserAuthController {
       const ord = await OrderModel.create(order);
       return res.status(200).json({
         isOk: true,
-        message: "goooooode",
+        message: "محصول به سبد خرید شما اضافه شد.",
       });
     } catch (error) {
       // next(error);
       next(createError.BadRequest(error.message));
+    }
+  }
+
+  async removeFromBasket(req, res, next) {
+    try {
+      const flowerid = req.body.flowerid;
+      const box = await OrderModel.deleteOne({ flowerid });
+
+      if (!box.deletedCount) {
+        return res.status(422).json({
+          success: false,
+          message: "عملیات حذف از سبر خرید موفقیت آمیز نبود.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "محصول با موفقیت از سبد خرید حذف شد.",
+      });
+    } catch (error) {
+      next(error);
     }
   }
   

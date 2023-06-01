@@ -5,7 +5,8 @@ const {
 const router = require("express").Router();
 router.post("/login", UserAuthController.login);
 router.post("/register", UserAuthController.register);
-router.post("/addbasket", UserAuthController.addBasket);
+router.post("/addToBasket", UserAuthController.addToBasket);
+router.post("/removeFromBasket", UserAuthController.removeFromBasket);
 
 module.exports = {
   UserAuthRoutes: router,
