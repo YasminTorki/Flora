@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product List</title>
+    <style>
+      /* CSS Styles for Product List */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .product-image {
+        max-width: 100px;
+        max-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Product Form -->
+    <form id="product-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required />
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" step="0.01" required />
+
+      <label for="count">Count:</label>
+      <input type="number" id="count" required />
+
+      <label for="image">Image:</label>
+      <input type="file" id="image" accept="image/*" required />
+
+      <button type="submit">Add Product</button>
+    </form>
+
+    <!-- Product List Table -->
+    <table id="product-list">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Count</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+  <script>
+    // JavaScript Code for Product List
+    form = document.querySelector("#product-form");
+    productList = document.querySelector("#product-list tbody");
+
+    let products = [];
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.querySelector("#name").value;
+      const price = document.querySelector("#price").value;
+      const count = document.querySelector("#count").value;
+      const image = document.querySelector("#image").files[0];
+
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = () => {
+        const product = {
+          name,
+          price,
+          count,
+          image: reader.result,
+        };
+
+        products.push(product);
+
+        renderProducts();
+      };
+
+      form.reset();
+
+      const name1 = document.getElementById("name").value;
+      const price1 = document.getElementById("price").value;
+      const count1 = document.getElementById("count").value;
+      const image1 = document.getElementById("image").files[0];
+
+      try {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          name: name1,
+          price: price1,
+          count: count1,
+          image: image1,
+        });
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        const response = fetch("http://localhost:3000/products/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
+      } catch (error) {
+        console.log("error while using API pic")
+      }
+           fetch('http://localhost:3000/products/', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ name1, price1,count1,image1 })
+       })
+       .then(response => response.json())
+       .then(data => console.log(data))
+       .catch(error => console.error(error));
+    });
+
+    function renderProducts() {
+      productList.innerHTML = "";
+
+      products.forEach((product, index) => {
+        const tr = document.createElement("tr");
+
+        const imgTd = document.createElement("td");
+        const img = document.createElement("img");
+        img.src = product.image;
+        img.classList.add("product-image");
+        imgTd.appendChild(img);
+
+        const nameTd = document.createElement("td");
+        nameTd.textContent = product.name;
+
+        const priceTd = document.createElement("td");
+        priceTd.textContent = product.price;
+
+        const countTd = document.createElement("td");
+        countTd.textContent = product.count;
+
+        const buttonTd = document.createElement("td");
+        const button = document.createElement("button");
+        button.textContent = "Delete";
+        button.addEventListener("click", () => deleteProduct(index));
+        buttonTd.appendChild(button);
+
+        tr.appendChild(imgTd);
+        tr.appendChild(nameTd);
+        tr.appendChild(priceTd);
+        tr.appendChild(countTd);
+        tr.appendChild(buttonTd);
+
+        productList.appendChild(tr);
+      });
+    }
+
+    function deleteProduct(index) {
+      products.splice(index, 1);
+      renderProducts();
+    }
+  </script>
+</html>

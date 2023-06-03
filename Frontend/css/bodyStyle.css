@@ -1,0 +1,92 @@
+    #product-list{
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+      grid-auto-rows: minmax(100px , auto); 
+      max-width: 1200px;   
+      margin: 0 auto;  
+      width: fit-content;
+    }
+    @media (max-width: 900px) {
+     #product-list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      #product-list { grid-template-columns: repeat(1, 1fr); }
+    }
+   
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+      border: solid 1px #000;
+      border-radius: 1rem;
+      width: 90%;
+      padding: 0.75rem;
+    }
+ 
+
+    .product img {
+      width: 300px;
+      height: 300px;       
+      border-radius: 10%;
+      padding: 15px;
+    }
+
+    .product-name {
+      font-weight: bold;
+      margin: 1rem 0;
+      font-size: large;
+      padding: 10px;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    .product button {
+    background-color: #fb0125;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 100px;
+    font-size:medium;
+    border-radius: 10%;
+  }
+  .product input[type="number"] {
+    width: 50px;
+    margin-right: 5px;
+    padding: 2px;
+    margin: 10px;
+
+  }
+  h4 {
+  text-align: right;
+  padding-right: 20px;
+  color: #000;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+button {
+    background-color: #fb0125;
+    border: none;
+   
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 5px 35px;
+   border-radius: 10%;
+    
+  }
+  .b-left{
+    float: left;
+    margin: 20px;
+  }
+  .b-rigth{
+    float: right;
+    margin: 20px;
+   
+  }
