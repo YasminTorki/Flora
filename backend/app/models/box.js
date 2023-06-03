@@ -5,6 +5,7 @@ const Schema = new mongoose.Schema({
   price: { type: Number, required: true },
   image: { type: String },
   count: { type: Number, required: true }, 
+  desc: { type: String }
 });
 
 module.exports = {

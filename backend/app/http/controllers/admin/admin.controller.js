@@ -58,51 +58,50 @@ module.exports = new (class AdminController extends Controller {
 
   async addPrepProduct(req, res, next) {
     try {
-      const data = JSON.parse(req.body.properties);
-      const name = data.name;
-      let flower = await ProductModel.findOne({ name });
+      const name = req.body.name;
+      let product = await ProductModel.findOne({ name });
 
-      if (flower) {
+      if (product) {
         return res.status(422).json({
           success: false,
-          message: " این گل قبلا در دیتابیس ثبت شده است",
+          message: "این محصول در دیتابیس ثبت شده است",
         });
       }
-      let filename = null;
+
       const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, "C:/Users/Assist/Desktop/floraMay28/Flora/backend/uploads");
+          cb(null, "../uploads");
         },
 
         filename: function (req, file, cb) {
-          filename = Date.now() + "-" + file.originalname;
-          cb(null, filename);
+          cb(null, Date.now() + "-" + file.originalname);
         },
       });
-
-      const newPrepProduct = {
-        name: data.name,
-        discount: data.discount,
-        type: data.type,
-        price: data.price,
-        image: req.file.originalname,
-        desc: data.desc,
-      };
-      const upload = multer({ storage: storage }).single("file");
+      const upload = multer({ storage: storage }).single("image");
 
       upload(req, res, async (err) => {
         if (err) {
           console.error(err);
-          return res.status(500).json({
-            success: false,
-            message: "upload failed",
-          });
+          return res.sendStatus(500);
         }
-        await ProductModel.create(newFlower);
-        return res.status(200).json({
-          success: true,
-          message: "upload success",
+        console.log(req.file);
+        product = await ProductModel.create({
+          name: req.body.name,
+          price: req.body.price,
+          image: req.file,
+          count: req.body.count,
         });
+      });
+
+      if (product !== null) {
+        return res.status(422).json({
+          success: false,
+          message: "خطایی رخ داده است",
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "عملیات موفقیت آمیز بود",
       });
     } catch (error) {
       next(error);
@@ -175,7 +174,6 @@ module.exports = new (class AdminController extends Controller {
           message: "خطایی رخ داده است",
         });
       }
-
       return res.status(200).json({
         success: true,
         message: "عملیات موفقیت آمیز بود",
@@ -354,6 +352,4 @@ module.exports = new (class AdminController extends Controller {
       next(error);
     }
   }
-
 })();
-

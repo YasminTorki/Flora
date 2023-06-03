@@ -6,8 +6,8 @@ const Schema = new mongoose.Schema({
   image: { type: Buffer },
   category: { type: mongoose.Types.ObjectId},
   count: { type: Number, required: true },
-  type: { type: [String], required: true },
-  desc: { type: String, required: true },
+  type: { type: [String] },
+  desc: { type: String },
 });
 module.exports = {
   ProductModel: mongoose.model("Prep_products", Schema),

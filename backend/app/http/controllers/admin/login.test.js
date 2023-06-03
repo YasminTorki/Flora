@@ -15,29 +15,30 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-test("valid email and password so login should be successful", async () => {
-  let user = await UserModel.findOne({ email: "test@gmail.com" });
+test("valid email and password so admin login should be successful", async () => {
+  let user = await UserModel.findOne({ email: "testadmin@gmail.com" });
   if (user) {
-    await UserModel.deleteOne({ email: "test@gmail.com" });
+    await UserModel.deleteOne({ email: "testadmin@gmail.com" });
   }
 
   const testUser = new UserModel({
-    name: "test",
-    Lastname: "testi",
-    email: "test@gmail.com",
-    password: "testtest",
+    name: "testadmin",
+    Lastname: "testadmini",
+    email: "testadmin@gmail.com",
+    password: "testadmin",
     Role: "admin",
   });
   await testUser.save();
 
   const req = {
-    body: { email: "test@gmail.com", password: "testtest" },
+    body: { email: "testadmin@gmail.com", password: "testadmin" },
   };
   const res = { send: jest.fn(), status: jest.fn(() => res), json: jest.fn() };
   const next = jest.fn();
 
   await loginPage(req, res, next);
-
+  
+  expect(next).not.toBeCalled();
   expect(res.status).toHaveBeenCalledWith(200);
   expect(res.json).toHaveBeenCalledWith({
     success: true,
@@ -47,12 +48,11 @@ test("valid email and password so login should be successful", async () => {
     email: user.email,
     role: user.Role,
   });
-  expect(next).not.toBeCalled();
 });
 
-test("invalid email and password so login should fail", async () => {
+test("invalid email and password so admin login should fail", async () => {
   const req = {
-    body: { email: "invalid@gmail.com", password: "invalidpassword" },
+    body: { email: "invalidadmin@gmail.com", password: "invalidadmin" },
   };
   const res = { send: jest.fn(), status: jest.fn(() => res), json: jest.fn() };
   const next = jest.fn();

@@ -2,7 +2,9 @@ const createError = require("http-errors");
 const { authSchema } = require("../../../validators/user/auth.schema");
 const { UserModel } = require("../../../../models/users");
 const { OrderModel } = require("../../../../models/order");
-class UserAuthController {
+const { Types } = require("mongoose");
+
+module.exports = new (class UserAuthController {
   async login(req, res, next) {
     const { email, password } = req.body;
     try {
@@ -55,12 +57,12 @@ class UserAuthController {
     try {
       console.log(req.body);
       const order = {
-        userid: req.body.userid,
+        userid: Types.ObjectId(req.body.userid),
         name: req.body.name,
         count: req.body.count,
         tprice: req.body.tprice,
         desc: req.body.desc,
-        flowerid: req.body.flowerid,
+        flowerid: Types.ObjectId(req.body.flowerid),
       };
 
       let flower = await OrderModel.findOne({ flowerid: req.body.flowerid });
@@ -103,8 +105,8 @@ class UserAuthController {
       next(error);
     }
   }
-}
+})();
 
-module.exports = {
-  UserAuthController: new UserAuthController(),
-};
+// module.exports = {
+//   UserAuthController: new UserAuthController(),
+// };
