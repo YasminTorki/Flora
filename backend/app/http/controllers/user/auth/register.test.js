@@ -21,10 +21,6 @@ test("valid email and password so user login should be successful", async () => 
   if (user) {
     await UserModel.deleteOne({ email: "testuser@gmail.com" });
   }
-  user = await UserModel.findOne({ name: "testuser" });
-  if (user) {
-    await UserModel.deleteOne({ email: "testuser" });
-  }
 
   const req = {
     body: {
@@ -47,11 +43,6 @@ test("valid email and password so user login should be successful", async () => 
       message: expect.any(String),
     })
   );
-
-  user = await UserModel.findOne({ email: "testuser@gmail.com" });
-  if (user) {
-    await UserModel.deleteOne({ email: "testuser@gmail.com" });
-  }
 });
 
 test("invalid email and password so user login should fail", async () => {
